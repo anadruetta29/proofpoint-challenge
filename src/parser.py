@@ -38,6 +38,7 @@ def load_csv(filepath: str):
 
     with open(filepath, newline="", encoding="utf-8") as f:
         reader = csv.reader(f)
+        next(reader)
 
         for row in reader:
 

@@ -1,28 +1,17 @@
 def generate_keys(record):
-    """
-    Generate different keys to find duplicates even if some data is missing.
-    """
-
     series = record["series_name_normalized"]
     season = record["season_number"]
     episode = record["episode_number"]
     title = record["episode_title_normalized"]
 
-    keys = []
-
-    keys.append((series, season, episode))
-
-    keys.append((series, 0, episode, title))
-
-    keys.append((series, season, 0, title))
-
-    return keys
+    return [
+        (series, season, episode),
+        (series, 0, episode, title),
+        (series, season, 0, title)
+    ]
 
 
 def calculate_score(record):
-    """
-    Score records to determine which duplicate to keep. Higher score implicates a better record.
-    """
 
     score = 0
 
@@ -39,34 +28,42 @@ def calculate_score(record):
 
 
 def deduplicate(records):
-    """
-    Find and remove duplicates, keeping only the record with the most info.
-    """
 
-    seen = {}
+    unique_records = []
+    key_index = {}
+
     duplicates = 0
 
     for record in records:
 
         keys = generate_keys(record)
 
-        existing_key = None
+        matched_record = None
+        matched_index = None
 
         for key in keys:
-            if key in seen:
-                existing_key = key
+            if key in key_index:
+                matched_index = key_index[key]
+                matched_record = unique_records[matched_index]
                 break
 
-        if existing_key is None:
+        if matched_record is None:
 
-            seen[keys[0]] = record
+            index = len(unique_records)
+            unique_records.append(record)
+
+            for key in keys:
+                key_index[key] = index
+
             continue
 
         duplicates += 1
 
-        existing_record = seen[existing_key]
+        if calculate_score(record) > calculate_score(matched_record):
 
-        if calculate_score(record) > calculate_score(existing_record):
-            seen[existing_key] = record
+            unique_records[matched_index] = record
 
-    return list(seen.values()), duplicates
+            for key in keys:
+                key_index[key] = matched_index
+
+    return unique_records, duplicates

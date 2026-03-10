@@ -1,6 +1,7 @@
 from parser import load_csv
 from cleaner import clean_records
 from deduplicator import deduplicate
+from report import generate_report
 import csv
 
 
