@@ -1,11 +1,5 @@
-def generate_report(
-    total_input: int,
-    total_output: int,
-    discarded: int,
-    corrected: int,
-    duplicates: int,
-    filepath: str = "report.md"
-):
+def generate_report( total_input: int, total_output: int, discarded: int, corrected: int, duplicates: int,
+                     filepath: str = "report.md"):
     """
     Generate a Markdown data quality report summarizing the processing results.
     """
