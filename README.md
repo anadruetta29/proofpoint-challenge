@@ -35,4 +35,14 @@ along with an explanation of the deduplication strategy.
 This file orchestrates the entire processing pipeline. It loads the CSV data, cleans the records, 
 removes duplicates, writes the final cleaned catalog, and generates the data quality report.
 
+## Additional Exercise – Word Frequency Analysis
+
+A small additional script (`word_frequency.py`) was implemented to analyze word frequency in a text file.
+
+The program:
+- Reads a text file
+- Normalizes the text (case-insensitive)
+- Removes punctuation and special characters
+- Counts word occurrences
+- Displays the top 10 most frequent words
 
