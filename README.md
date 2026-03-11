@@ -46,3 +46,8 @@ The program:
 - Counts word occurrences
 - Displays the top 10 most frequent words
 
+How to run this script 
+    python src/word_frequency.py 
+
+
+

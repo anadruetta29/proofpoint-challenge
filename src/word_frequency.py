@@ -2,12 +2,8 @@ from collections import Counter
 
 def analyze_word_frequency(filepath: str, top_n: int = 10):
 
-    try:
-        with open(filepath, "r", encoding="utf-8") as file:
-            text = file.read()
-    except FileNotFoundError:
-        print("File not found.")
-        return []
+    with open(filepath, "r", encoding="utf-8") as file:
+        text = file.read()
 
     text = text.lower()
 
@@ -25,11 +21,15 @@ def analyze_word_frequency(filepath: str, top_n: int = 10):
 
 if __name__ == "__main__":
 
-    filepath = "../data/sample_text.txt"
+    filepath = "data/sample_text.txt"
 
-    results = analyze_word_frequency(filepath)
+    try:
+        results = analyze_word_frequency(filepath)
+    except FileNotFoundError:
+        print(f"File not found: {filepath}")
+        exit(1)
 
     print("Top 10 most frequent words:\n")
-
     for word, count in results:
         print(f" Word: {word} - Frequency: {count}")
+
