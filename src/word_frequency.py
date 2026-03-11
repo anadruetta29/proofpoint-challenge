@@ -1,6 +1,4 @@
-import re
 from collections import Counter
-
 
 def analyze_word_frequency(filepath: str, top_n: int = 10):
 
@@ -13,9 +11,12 @@ def analyze_word_frequency(filepath: str, top_n: int = 10):
 
     text = text.lower()
 
-    text = re.sub(r"[^a-z0-9\s]", "", text)
+    cleaned_text = ""
+    for char in text:
+        if char.isalnum() or char.isspace():
+            cleaned_text += char
 
-    words = [w for w in text.split() if w]
+    words = [w for w in cleaned_text.split() if w]
 
     word_counts = Counter(words)
 
@@ -31,4 +32,4 @@ if __name__ == "__main__":
     print("Top 10 most frequent words:\n")
 
     for word, count in results:
-        print(f"{word}: {count}")
+        print(f" Word: {word} - Frequency: {count}")
